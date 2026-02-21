@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getUsers } from "@/lib/api/auth"
-import { getStudents } from "@/lib/api/student"
+import { getAdUsers } from "@/lib/api/auth"
+import { getExecutiveStudents } from "@/lib/api/student"
 import { getCompanies } from "@/lib/api/companies"
 import { getJobs } from "@/lib/api/jobs"
 import type { User, Student, Company, Job } from "@/lib/types"
@@ -23,8 +23,8 @@ export default function AdminDashboard() {
     async function load() {
       try {
         const [u, s, c, j] = await Promise.all([
-          getUsers().catch(() => []),
-          getStudents().catch(() => []),
+          getAdUsers().catch(() => []),
+          getExecutiveStudents().catch(() => []),
           getCompanies().catch(() => []),
           getJobs().catch(() => []),
         ])
@@ -50,14 +50,14 @@ export default function AdminDashboard() {
     )
   }
 
-  const studentUsers = users.filter((u) => u.role === "student").length
-  const executiveUsers = users.filter((u) => u.role === "executive").length
-  const adminUsers = users.filter((u) => u.role === "admin").length
+  const studentUsers = users.filter((u) => u.role === "student".toUpperCase()).length
+  const executiveUsers = users.filter((u) => u.role === "executive".toUpperCase()).length
+  const adminUsers = users.filter((u) => u.role === "admin".toUpperCase()).length
 
   const roleData = [
-    { role: "Students", count: studentUsers },
-    { role: "Executives", count: executiveUsers },
-    { role: "Admins", count: adminUsers },
+    { role: "student".toUpperCase(), count: studentUsers },
+    { role: "executive".toUpperCase(), count: executiveUsers },
+    { role: "admin".toUpperCase(), count: adminUsers },
   ]
 
   return (

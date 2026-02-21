@@ -4,10 +4,14 @@ import type { SkillMaster, SkillVerification, UserSkillPayload } from "@/lib/typ
 export async function getSkills(): Promise<SkillMaster[]> {
   return apiClient<SkillMaster[]>("/api/skills/")
 }
-// export async function getSkills(): Promise<SkillMaster[]> {
+// export async function getExecSkills(): Promise<SkillMaster[]> {
 //   const response = await apiClient<any>("/api/skills/")
 //   return response.data ?? []
 // }
+export async function getExecSkills(): Promise<SkillMaster[]> {
+  const res = await apiClient<any>("/api/skills/")
+  return res.data
+}
 // export async function getSkills(): Promise<SkillMaster[]> {
 //   const response = await apiClient<any>("/api/skills/")
 //   return Array.isArray(response?.data) ? response.data : []

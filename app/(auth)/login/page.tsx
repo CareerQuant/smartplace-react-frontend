@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
 import { useAuth } from "@/lib/auth-context"
-import { getStudents } from "@/lib/api/student"
+import { getExecutiveStudents } from "@/lib/api/student"
 import { loginSchema, type LoginFormValues } from "@/lib/schemas"
 import { ApiClientError } from "@/lib/api/client"
 import { Button } from "@/components/ui/button"
@@ -45,7 +45,7 @@ export default function LoginPage() {
 
       if (role === "student") {
         try {
-          const students = await getStudents(String(decoded.user_id))
+          const students = await getExecutiveStudents(String(decoded.user_id))
           if (students && students.length > 0) {
             router.push("/student/dashboard")
           } else {

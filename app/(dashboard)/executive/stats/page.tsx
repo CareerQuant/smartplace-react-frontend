@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getStudents } from "@/lib/api/student"
+import { getExecutiveStudents } from "@/lib/api/student"
 import { getJobs } from "@/lib/api/jobs"
 import { getCompanies } from "@/lib/api/companies"
 import type { Student, Job, Company } from "@/lib/types"
@@ -31,7 +31,7 @@ export default function ExecutiveStatsPage() {
     async function load() {
       try {
         const [s, j, c] = await Promise.all([
-          getStudents().catch(() => []),
+          getExecutiveStudents().catch(() => []),
           getJobs().catch(() => []),
           getCompanies().catch(() => []),
         ])

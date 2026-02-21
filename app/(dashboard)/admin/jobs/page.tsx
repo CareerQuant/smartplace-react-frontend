@@ -7,6 +7,8 @@ import type { Job, Company } from "@/lib/types"
 import { DataTable, type Column } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
 
 const jobTypeLabels: Record<string, string> = {
   full_time: "Full Time",
@@ -18,6 +20,7 @@ export default function AdminJobsPage() {
   const [jobs, setJobs] = useState<Job[]>([])
   const [companies, setCompanies] = useState<Company[]>([])
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
     async function load() {
@@ -80,6 +83,9 @@ export default function AdminJobsPage() {
       <div>
         <h1 className="text-2xl font-bold text-foreground">All Jobs</h1>
         <p className="text-sm text-muted-foreground">View and manage all job listings across companies</p>
+        <Button  onClick={() => router.push("/executive/jobs/")}>
+    Create Job
+  </Button>
       </div>
       <DataTable
         columns={columns as Column<Record<string, unknown>>[]}

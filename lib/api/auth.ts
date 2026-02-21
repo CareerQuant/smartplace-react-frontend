@@ -64,3 +64,9 @@ export async function registerUser(payload: RegisterPayload): Promise<User> {
 export async function getUsers(): Promise<User[]> {
   return apiClient<User[]>("/api/auth/users/")
 }
+
+
+export async function getAdUsers(): Promise<User[]> {
+  const response = await apiClient<any>("/api/auth/users/")
+  return response?.data ?? []
+}

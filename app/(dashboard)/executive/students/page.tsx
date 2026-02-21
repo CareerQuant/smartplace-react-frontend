@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getStudents } from "@/lib/api/student"
+import { getESStudents } from "@/lib/api/student"
 import type { Student } from "@/lib/types"
 import { DataTable, type Column } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
@@ -14,7 +14,7 @@ export default function ExecutiveStudentsPage() {
   useEffect(() => {
     async function load() {
       try {
-        const data = await getStudents()
+        const data = await getESStudents()
         setStudents(data)
       } catch {
         // silent

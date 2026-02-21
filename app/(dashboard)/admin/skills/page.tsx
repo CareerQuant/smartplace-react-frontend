@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getSkills } from "@/lib/api/skills"
+import { getExecSkills } from "@/lib/api/skills"
 import type { SkillMaster } from "@/lib/types"
 import { DataTable, type Column } from "@/components/data-table"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -13,7 +13,7 @@ export default function AdminSkillsPage() {
   useEffect(() => {
     async function load() {
       try {
-        const data = await getSkills()
+        const data = await getExecSkills()
         setSkills(data)
       } catch {
         // silent

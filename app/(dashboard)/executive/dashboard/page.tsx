@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getStudents } from "@/lib/api/student"
+import { getExecutiveStudents } from "@/lib/api/student"
 import { getCompanies } from "@/lib/api/companies"
 import { getJobs } from "@/lib/api/jobs"
 import type { Student, Company, Job } from "@/lib/types"
@@ -21,7 +21,7 @@ export default function ExecutiveDashboard() {
     async function load() {
       try {
         const [s, c, j] = await Promise.all([
-          getStudents().catch(() => []),
+          getExecutiveStudents().catch(() => []),
           getCompanies().catch(() => []),
           getJobs().catch(() => []),
         ])

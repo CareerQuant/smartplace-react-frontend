@@ -2,7 +2,8 @@ import { apiClient } from "./client"
 import type { Company } from "@/lib/types"
 
 export async function getCompanies(): Promise<Company[]> {
-  return apiClient<Company[]>("/api/companies/")
+  const response = await apiClient<any>("/api/companies/")
+  return response?.data ?? []
 }
 
 export async function getCompany(id: number | string): Promise<Company> {

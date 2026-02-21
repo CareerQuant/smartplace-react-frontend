@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
 import { getJobs, createJob } from "@/lib/api/jobs"
 import { getCompanies } from "@/lib/api/companies"
-import { getSkills } from "@/lib/api/skills"
+import { getExecSkills } from "@/lib/api/skills"
 import type { Job, Company, SkillMaster } from "@/lib/types"
 import { jobSchema, type JobFormValues } from "@/lib/schemas"
 import { ApiClientError } from "@/lib/api/client"
@@ -82,7 +82,7 @@ export default function ExecutiveJobsPage() {
         const [j, c, s] = await Promise.all([
           getJobs().catch(() => []),
           getCompanies().catch(() => []),
-          getSkills().catch(() => []),
+          getExecSkills().catch(() => []),
         ])
         setJobs(j)
         setCompanies(c)

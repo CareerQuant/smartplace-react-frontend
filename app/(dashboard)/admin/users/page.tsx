@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getUsers } from "@/lib/api/auth"
+import { getAdUsers } from "@/lib/api/auth"
 import type { User } from "@/lib/types"
 import { DataTable, type Column } from "@/components/data-table"
 import { Badge } from "@/components/ui/badge"
@@ -14,7 +14,7 @@ export default function AdminUsersPage() {
   useEffect(() => {
     async function load() {
       try {
-        const data = await getUsers()
+        const data = await getAdUsers()
         setUsers(data)
       } catch {
         // silent
