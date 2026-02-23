@@ -39,3 +39,14 @@ export async function updateStudentSkills(
     body: data,
   })
 }
+
+export async function getSkillsByIds(ids: number[]): Promise<SkillMaster[]> {
+  if (!ids.length) return []
+
+  const query = ids.join(",")
+  const response = await apiClient<{ data: SkillMaster[] }>(
+    `/api/skills/?ids=${query}`
+  )
+
+  return response?.data ?? []
+}

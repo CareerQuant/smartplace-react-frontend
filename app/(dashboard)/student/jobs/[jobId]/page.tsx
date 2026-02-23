@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Progress } from "@/components/ui/progress"
 import { ArrowLeft, MapPin, Calendar, IndianRupee, TrendingUp } from "lucide-react"
+import { getSkillsByIds } from "@/lib/api/skills"
 
 const jobTypeLabels: Record<string, string> = {
   full_time: "Full Time",
@@ -32,6 +33,7 @@ export default function JobDetailPage() {
   const [prediction, setPrediction] = useState<PredictionResult | null>(null)
   const [loading, setLoading] = useState(true)
   const [predicting, setPredicting] = useState(false)
+  const [skillMap, setSkillMap] = useState<Record<number, string>>({})
 
   // useEffect(() => {
   //   async function load() {
@@ -50,12 +52,61 @@ export default function JobDetailPage() {
   //   }
   //   load()
   // }, [jobId, user])
-  useEffect(() => {
+//   useEffect(() => {
+//   async function load() {
+//     try {
+//       const jobData = await getJob(jobId)
+//       setJob(jobData)
+
+//       if (user?.user_id) {
+//         const studentResponse = await getStudents(String(user.user_id))
+//         const students = studentResponse?.data ?? []
+
+//         if (Array.isArray(students) && students.length > 0) {
+//           setStudentId(students[0].id)
+//         }
+//       }
+//     } catch (error) {
+//       console.error("Job detail error:", error)
+//       toast.error("Failed to load job details")
+//     } finally {
+//       setLoading(false)
+//     }
+//   }
+
+//   if (jobId && user) {
+//     load()
+//   }
+// }, [jobId, user])
+useEffect(() => {
   async function load() {
     try {
-      const jobData = await getJob(jobId)
-      setJob(jobData)
+      const jobResponse = await getJob(jobId)
+      // const jobData = jobResponse?.data?.[0]
 
+      if (!jobResponse) {
+        toast.error("Job not found")
+        return
+      }
+
+      setJob(jobResponse)
+
+      // 🔹 Extract skill IDs
+      const skillIds =
+        jobResponse.required_skills?.map((rs: any) => rs.skill_id) ?? []
+
+      if (skillIds.length > 0) {
+        const skills = await getSkillsByIds(skillIds)
+
+        const map: Record<number, string> = {}
+        skills.forEach((skill) => {
+          map[skill.id] = skill.skill_name
+        })
+
+        setSkillMap(map)
+      }
+
+      // 🔹 Student fetch
       if (user?.user_id) {
         const studentResponse = await getStudents(String(user.user_id))
         const students = studentResponse?.data ?? []
@@ -156,9 +207,13 @@ export default function JobDetailPage() {
               <h3 className="mb-2 text-sm font-semibold text-foreground">Required Skills</h3>
               <div className="flex flex-wrap gap-2">
                 {job.required_skills.map((rs, i) => (
+                  // <Badge key={i} variant="outline">
+                  //   Skill #{rs.skill_id} (Min: {rs.minimum_skill_score}%)
+                  // </Badge>
                   <Badge key={i} variant="outline">
-                    Skill #{rs.skill_id} (Min: {rs.minimum_skill_score}%)
-                  </Badge>
+  {skillMap[rs.skill_id] || `Skill #${rs.skill_id}`} 
+  {" "} (Min: {rs.minimum_skill_score}%)
+</Badge>
                 ))}
               </div>
             </div>

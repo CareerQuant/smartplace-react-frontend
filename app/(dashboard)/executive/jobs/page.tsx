@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useRouter } from "next/navigation"
 import {
   Dialog,
   DialogContent,
@@ -43,6 +44,8 @@ export default function ExecutiveJobsPage() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [selectionInput, setSelectionInput] = useState("")
+  const router = useRouter()
+
 
   const form = useForm<JobFormValues>({
     resolver: zodResolver(jobSchema),
@@ -339,6 +342,9 @@ export default function ExecutiveJobsPage() {
         data={rows as unknown as Record<string, unknown>[]}
         searchKey={"job_role" as never}
         searchPlaceholder="Search jobs..."
+        onRowClick={(row) => {
+    router.push(`/executive/jobs/${row.id}`)
+  }}
       />
     </div>
   )
