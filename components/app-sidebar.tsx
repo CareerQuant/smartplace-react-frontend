@@ -77,7 +77,7 @@ export function AppSidebar() {
         >
           <GraduationCap className="h-6 w-6 text-sidebar-primary" />
           <span className="text-lg font-bold text-sidebar-foreground">
-            CareerQuant
+            SmartPlace
           </span>
         </Link>
       </SidebarHeader>
@@ -105,11 +105,11 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="px-4 py-3">
+      {/* <SidebarFooter className="px-4 py-3">
         <p className="text-xs text-sidebar-foreground/50">
           CareerQuant v1.0
         </p>
-      </SidebarFooter>
+      </SidebarFooter> */}
     </Sidebar>
   )
 }
